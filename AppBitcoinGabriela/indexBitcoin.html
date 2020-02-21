@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <link rel="manifest" href="manifest.json">
+    <style>
+    body {
+      padding-top: 5rem;
+    }
+    .starter-template {
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+
+    .container{
+    background-image: url('https://cdn.pixabay.com/photo/2012/02/28/10/20/achievement-18134_960_720.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+
+@media (min-width: sm) {
+    .container{
+        background-image: url('https://cdn.pixabay.com/photo/2012/02/28/10/20/achievement-18134_960_720.jpg');
+    }
+}
+
+@media (min-width: md) {
+    .container{
+        background-image: url('https://cdn.pixabay.com/photo/2012/02/28/10/20/achievement-18134_960_720.jpg');
+    }
+
+}
+   
+    </style>
+    <title>App Bitcoin</title>
+  </head>
+
+  <body>
+
+      <div id="app">
+<div class="container">
+
+<div class="row">
+<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12"/>
+<form action="" method="" id="cadastrar" onSubmit="return false;" >
+<div class="form-group">
+	<div id="left">
+ <h1 class="blocktext"><label for="criptomoedas">Criptomoedas</label></h1>
+<div class="center_left"></div>
+        </div>
+<input type="text" class="form-control" id="criptomoedas"  aria-describedby="criptomoedas" placeholder="Digite a Moeda para procurar a cotação em relação ao Dolar">
+</div>
+
+<button class="btn btn-primary" @click="buscaBitcoins()">Buscar</button>
+</form>
+</div>
+
+
+</div>
+
+<div class="row">
+
+<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 ">
+<table class="table">
+<thead>
+<tr>
+
+
+<th scope="col">Bitcoin</th>
+<th scope="col">Ethereum</th>
+<th scope="col">Litecoin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+
+<td>{{ BTC }}</td>
+<td>{{ ETH }}</td>
+<td>{{ LTC }}</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+const app = new Vue({
+el: '#app',
+data: {
+
+BTC:0,
+ETH:0,
+LTC:0
+
+},
+methods:{
+
+buscaBitcoins(){
+const API_KEY='cc9e5c8a661511c35e4ad418ac197b177b63f34933ad3dbdbe542f7b2a364250';
+let url ='https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC&tsyms=USD&api_key=' + API_KEY;
+axios.get(url).then((response)=>{
+
+	console.log (response);
+const dados = response.data;
+
+
+this.BTC = dados.BTC.USD;
+this.ETH = dados.ETH.USD;
+this.LTC = dados.LTC.USD;
+
+
+console.log("Bitcoin: " ,  this.BTC );
+console.log("Ethereum: " ,  this.ETH );
+console.log("Litecoin: " ,  this.LTC );
+
+}).catch((error) => {
+console.log('ERR: '+ error);
+
+          }); //axios
+        }// funcion
+      }// methods
+      }); //veu
+  </script>
+  <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+   navigator.serviceWorker.register("/sw.js")
+   .then( function(registration) {
+    console.log('Service Worker Registered', registration.scope);
+   })
+ })
+} else {
+  console.log('Service Worker NOT Registered');
+}
+</script>
+
+    
+  </body>
+</html>
